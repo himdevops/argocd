@@ -1,0 +1,20 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: selfhealtestapp      #appname 
+  namespace: argocd
+spec:
+  destination:                #destination server where app needs to be deployed 
+    namespace: argocdappdemo                # namespace where app should be deployed 
+    server: 'https://kubernetes.default.svc'            # server/cluster where app should be deployed 
+  source:
+    path: argocd/himanshu-argo-files
+    repoURL: 'https://github.com/SMACAcademy/ArgoCD-Complete-Master-Course.git'
+    targetRevision: HEAD
+  project: default
+  syncPolicy:
+    automated:
+      prune: false
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
